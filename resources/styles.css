@@ -51,6 +51,12 @@ main {
     padding: 2%;
 }
 
+.startPage {
+    margin: auto;
+    text-align: center;
+    max-width: 600px;
+}
+
 footer {
     padding: 2%;
     background-color: var(--primaryColor);
