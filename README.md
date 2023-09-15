@@ -1,4 +1,4 @@
-# code-quiz
+# Code Quiz
 
 ## Table of Contents
 - [Description](#description)
