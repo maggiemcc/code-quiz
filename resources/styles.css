@@ -51,10 +51,28 @@ main {
     padding: 2%;
 }
 
-.startPage {
+.startPage, .question-section {
     margin: auto;
     text-align: center;
     max-width: 600px;
+}
+
+.answer-options {
+    text-align: left;
+}
+
+.answer-options button {
+    display: block;
+    width: 100%;
+    padding: 2%;
+    margin: 5% 0;
+}
+
+.answer-options button:hover {
+    cursor: pointer;
+    background-color: rgb(61, 132, 255);
+    color: var(--secondaryColor);
+    font-weight: bold;
 }
 
 footer {

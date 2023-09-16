@@ -4,37 +4,36 @@ var viewScoresBtn = document.querySelector(".high-scores");
 var quizQuestion = document.querySelector(".question");
 var answerOptions = document.querySelector(".answer-options");
 var feedback = document.querySelector(".feedback");
-
 var score = 0;
-var currentQuestion = 0;
 
 // questions for quiz
-var questions = [
+var quizQuestions = [
     {
-        question: "Where is the correct place JavaScript link?",
-        answer: [
-            {option: "In the <body> section", isCorrect: true},
-            {option: "After the <footer> section", isCorrect: false}
+        question: "1. Where is the correct place JavaScript link?",
+        choices: [
+            { option: "In the <body> section", answer: true },
+            { option: "In the <footer> section", answer: false },
+            { option: "After the <footer> section", answer: false }
         ]
     },
     {
-        question: "How does a FOR loop start?",
-        answer: [
-            {option: "for (i <= 5; i++)", isCorrect: false},
-            {option: "for (i = 0; i <= 5)", isCorrect: false},
-            {option: "for (i = 0; i <= 5; i++)", isCorrect: true},
+        question: "2. How does a FOR loop start?",
+        choices: [
+            { option: "for (i <= 5; i++)", answer: false },
+            { option: "for (i = 0; i <= 5)", answer: false },
+            { option: "for (i = 0; i <= 5; i++)", answer: true },
         ]
     },
     {
-        question: "Correct way to write a JavaScript array?",
-        answer: [
-            {option: "var colors = ['red', 'green', 'blue']", isCorrect: true},
-            {option: "var colors = 'red', 'green', 'blue'", isCorrect: false},
-            {option: "var colors = [1:'red', 2:'green', 3:'blue']", isCorrect: false},
+        question: "3. Correct way to write a JavaScript array?",
+        choices: [
+            { option: "var colors = ['red', 'green', 'blue']", answer: true },
+            { option: "var colors = 'red', 'green', 'blue'", answer: false },
+            { option: "var colors = [1:'red', 2:'green', 3:'blue']", answer: false },
         ]
     }
- 
-]
+];
+
 
 // Add event listeners
 beginQuizBtn.addEventListener("click", beginQuiz);
@@ -42,18 +41,22 @@ viewScoresBtn.addEventListener("click", viewScores);
 
 
 // functions
-function beginQuiz(){
+function beginQuiz() {
     console.log("begin button working")
-    quizQuestion.textContent = questions[currentQuestion].question;
+    beginQuizBtn.style.visibility = 'hidden';
+    var currentQuestion = 0;
 
-    for (let i = 0; i <questions[currentQuestion].answer.length; i++){
-        var li = document.createElement("li");
-        li.textContent = questions[currentQuestion].answer[i].option;
+    quizQuestion.textContent = quizQuestions[currentQuestion].question;
 
-        answerOptions.appendChild(li);
+      for (let i = 0; i < quizQuestions[currentQuestion].choices.length; i++){
+        var choiceBtn = document.createElement("button");
+        choiceBtn.textContent = quizQuestions[currentQuestion].choices[i].option;
+
+        answerOptions.appendChild(choiceBtn);
     }
 }
 
-function viewScores(){
+function viewScores() {
     console.log("view scores button working")
+    beginQuizBtn.style.visibility = 'visible';
 }
