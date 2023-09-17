@@ -3,6 +3,14 @@ var beginQuizBtn = document.querySelector(".beginQuiz");
 var viewScoresBtn = document.querySelector(".high-scores");
 var yourScore = document.querySelector(".your-score");
 var quizSection = document.querySelector(".quiz-section");
+var userScoresSection = document.querySelector(".user-scores");
+
+// var user = document.createElement("div");
+// var userInitals = document.createElement("p");
+// var userPoints = document.createElement("p");
+// userScore.className = "user";
+// userInitals.className = "user-initials";
+// userPoints.className = "user-points";
 
 var answerSection = document.createElement("div");
 answerSection.className = "answer-section";
@@ -67,7 +75,7 @@ var quizQuestions = [
 
 var currentQuestion = 0;
 var score = 0;
-yourScore.textContent = "YOUR SCORE: " + score + "/" + quizQuestions.length;
+yourScore.textContent = "YOUR SCORE: ";
 var allQuestions = quizQuestions.length;
 
 // Display Question
@@ -76,7 +84,7 @@ var askQuestion = document.createElement("h2");
 
 // Shuffle quiz questions
 function beginQuiz() {
-  timerCount = 30;
+  timerCount = 20;
   beginQuizBtn.disabled = true;
   quizSection.style.visibility = "visible";
   startTimer();
@@ -86,7 +94,8 @@ function beginQuiz() {
 // Display questions on screen
 function displayQuestion() {
   yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
-  askQuestion.textContent = quizQuestions[currentQuestion].ask;
+
+  askQuestion.textContent = (currentQuestion + 1) + ". " + quizQuestions[currentQuestion].ask;
   trueBtn.textContent = quizQuestions[currentQuestion].choices[0].option;
   falseBtn.textContent = quizQuestions[currentQuestion].choices[1].option;
 
@@ -99,8 +108,13 @@ function displayQuestion() {
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
       }
     } else {
-      timerCount -= 3;
-      yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
+      if (timerCount > 0){
+        timerCount -= 5;
+        yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
+      } else if(timerCount <= 0){
+        clearInterval(timer);
+        yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
+      }
     }
     if (currentQuestion < allQuestions) {
       nextQuestion();
@@ -116,8 +130,13 @@ function displayQuestion() {
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
       }
     } else {
-      timerCount -= 3;
-      yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
+      if (timerCount > 0){
+        timerCount -= 5;
+        yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
+      } else if(timerCount <= 0){
+        clearInterval(timer);
+        yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
+      }
     }
     if (currentQuestion < allQuestions) {
       nextQuestion();
@@ -138,14 +157,14 @@ function nextQuestion() {
   if (currentQuestion >= allQuestions) {
     alert("congrats you finished!");
     // refresh
-    // window.location.reload();
+    window.location.reload();
     clearInterval(timer);
   } else {
     // True button
-    askQuestion.textContent = quizQuestions[currentQuestion].ask;
+    askQuestion.textContent = (currentQuestion + 1) + ". " + quizQuestions[currentQuestion].ask;
     trueBtn.textContent = quizQuestions[currentQuestion].choices[0].option;
     // // False button
-    askQuestion.textContent = quizQuestions[currentQuestion].ask;
+    askQuestion.textContent = (currentQuestion + 1) + ". " + quizQuestions[currentQuestion].ask;
     falseBtn.textContent = quizQuestions[currentQuestion].choices[1].option;
   }
 }
@@ -154,13 +173,13 @@ function startTimer() {
   timer = setInterval(function () {
     timerCount--;
     timeRemaining.textContent = "TIME REMAINING: " + timerCount;
-    if (timerCount === 0) {
+    if (timerCount <= 0) {
       clearInterval(timer);
       beginQuizBtn.disabled = false;
       quizSection.style.visibility = "hidden";
-      alert("OH NO! Sorry you did not finish in time. Please try again.")
+      alert("Nice try, please try again!")
       // refresh
-      // window.location.reload();
+      window.location.reload();
     }
   }, 1000);
 }

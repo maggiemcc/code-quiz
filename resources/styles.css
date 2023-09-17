@@ -22,62 +22,41 @@ header {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    height: 100px;
     margin: 0;
     padding: 2%;
     background-color: var(--primaryColor);
     color: var(--secondaryColor);
 }
 
-.high-scores {
-    background-color: var(--secondaryColor);
-    color: var(--primaryColor);
-    padding: 20px;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-.high-scores:hover {
-    background-color: rgb(61, 132, 255);
-    color: var(--secondaryColor);
-    cursor: pointer;
-}
-
-.time-remaining {
+.your-score, .time-remaining {
     margin: auto 0;
 }
 
 main {
     margin: 0;
     padding: 2%;
-    min-height: 90vh;
+    height: calc(100% - 130px);
 }
 
-.startPage, .quiz-section {
-    margin: auto;
-    text-align: center;
-    max-width: 700px;
-}
-
-.answer-options {
-    text-align: left;
-}
-
-.answer-options button {
+button {
     display: block;
     width: 100%;
     padding: 2%;
     margin: 5% 0;
 }
 
-.answer-options button:hover {
+button:hover {
     cursor: pointer;
     background-color: rgb(61, 132, 255);
     color: var(--secondaryColor);
     font-weight: bold;
 }
 
-.quiz-section {
-    text-align: left;
+.startPage, .quiz-section, .user-scores {
+    margin: auto;
+    text-align: center;
+    max-width: 700px;
 }
 
 .displayChoices label {
@@ -96,34 +75,19 @@ main {
     background-color: rgb(61, 132, 255);
 }
 
+.user-scores {
+    border: 5px solid var(--primaryColor);
+    min-height: 200px;
+}
+
 footer {
     padding: 2%;
     background-color: var(--primaryColor);
     color: var(--secondaryColor);
     text-align: center;
-    /* position: absolute;
-    bottom: 0;
-    width: 100%; */
 }
 
-.answer-section, .controls-section {
-    text-align: center;
-    margin: 2% 0;
-}
-
-.answer-section button, .controls-section button {
-    padding: 2%;
-    margin: 2%;
-    width: 100%;
-}
-
-.controls-section button {
-    padding: 2%;
-    margin: 2%;
-    width: 25%;
-}
-
-.answer-section button:hover, .controls-section button:hover{
+.answer-section button:hover {
     cursor: pointer;
     color: var(--secondaryColor);
     background-color: rgb(61, 132, 255);
