@@ -1,103 +1,154 @@
 // variables
 var beginQuizBtn = document.querySelector(".beginQuiz");
 var viewScoresBtn = document.querySelector(".high-scores");
-// var quizQuestion = document.querySelector(".question");
-// var answerOptions = document.querySelector(".answer-options");
-// var result = document.querySelector(".result");
-var questionSection = document.querySelector(".question-section");
+var yourScore = document.querySelector(".your-score");
+var quizSection = document.querySelector(".quiz-section");
+
+var answerSection = document.createElement("div");
+answerSection.className = "answer-section";
+var controlsSection = document.createElement("div");
+controlsSection.className = "controls-section";
+
+var trueBtn = document.createElement("button");
+trueBtn.className = "answer-true";
+
+var falseBtn = document.createElement("button");
+falseBtn.className = "answer-false";
+
+quizSection.style.visibility = "hidden";
+
+// Add event listeners
+beginQuizBtn.addEventListener("click", beginQuiz);
+
 
 // TIMER
 var timeRemaining = document.querySelector(".time-remaining");
 var timer;
 var timerCount;
 
-var score = 0;
-
 // Quiz Array
 var quizQuestions = [
-    {
-        ask: "Where should you place the JavaScript link?",
-        choices: [{
-            a: "Where should you place the JavaScript link?",
-            b: "In the <footer> section",
-            c: "After the <footer> section",
-        }],
-        answer: "a"
-    },
-    {
-        ask: "How does a FOR loop start?",
-        choices: [{
-            a: "for (i <= 5; i++)",
-            b: "for (i = 0; i <= 5)",
-            c: "for (var i = 0; i <= 5; i++)"
-        }],
-        answer: "c"
-    },
+  {
+    ask: "The JavaScript link should go in the <footer>?",
+    choices: [
+      { option: "True", answer: false },
+      { option: "False", answer: true },
+    ]
+  },
+  {
+    ask: "The correct way to start a FOR loop is: for (var i = 0; i <= 5; i++)",
+    choices: [
+      { option: "True", answer: true },
+      { option: "False", answer: false },
+    ]
+  },
+  {
+    ask: 'The correct way to write a JavaScript array is: var colors = "red", "green", "blue"',
+    choices: [
+      { option: "True", answer: false },
+      { option: "False", answer: true },
+    ]
+  }
 ];
 
+var currentQuestion = 0;
+var score = 0;
+yourScore.textContent = "YOUR SCORE: " + score + "/" + quizQuestions.length;
+var allQuestions = quizQuestions.length;
+console.log("allQuestions", allQuestions);
 
+// Display Question
+var askQuestion = document.createElement("h2");
 
-// console.log("quizQuestions:", quizQuestions);
-// console.log("ask:", quizQuestions[0].ask);
-// console.log("choices:", quizQuestions[0].choices);
-
-// Add event listeners
-beginQuizBtn.addEventListener("click", beginQuiz);
 
 // Shuffle quiz questions
 function beginQuiz() {
-    timerCount = 10;
-    beginQuizBtn.disabled = true;
-    startTimer();
-    showQuestions();
+  timerCount = 10;
+  beginQuizBtn.disabled = true;
+  quizSection.style.visibility = "visible";
+  startTimer();
+  displayQuestion();
+}
+
+function displayQuestion() {
+
+  yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
+  askQuestion.textContent = quizQuestions[currentQuestion].ask;
+  trueBtn.textContent = quizQuestions[currentQuestion].choices[0].option;
+  falseBtn.textContent = quizQuestions[currentQuestion].choices[1].option;
+
+  // if True button is clicked event
+  trueBtn.onclick = function() {
+    console.log(">>", quizQuestions[currentQuestion].choices[0].answer)
+    if (quizQuestions[currentQuestion].choices[0].answer === true){
+      if (score < allQuestions) {
+        score++;
+        yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
+      }
+    } else {
+      console.log("whoops wrong!");
+      yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
+    }
+    if (currentQuestion < allQuestions) {
+      nextQuestion();
+    }
+  };
+
+  // if false button is clicked event
+  falseBtn.onclick = function() {
+    console.log(">>", quizQuestions[currentQuestion].choices[1].answer)
+    if (quizQuestions[currentQuestion].choices[1].answer === true){
+      if (score < allQuestions) {
+        score++;
+        yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
+      }
+    } else {
+      console.log("whoops wrong!");
+      yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
+    }
+    if (currentQuestion < allQuestions) {
+      nextQuestion();
+    }
+  };
+
+  // APPENDING
+  quizSection.appendChild(askQuestion);
+  quizSection.appendChild(answerSection);
+  answerSection.appendChild(trueBtn);
+  answerSection.appendChild(falseBtn);
+  quizSection.appendChild(controlsSection);
 };
 
-function showQuestions() {
-    // Loop through and get each question
-    for (var i = 0; i < quizQuestions.length; i++) {
-        var questionTitle = quizQuestions[i].ask;
-        console.log("question:", questionTitle)
+function nextQuestion() {
+  currentQuestion++;
 
-        var displayQuestion = document.createElement('h2');
-        displayQuestion.textContent = questionTitle;
-        questionSection.appendChild(displayQuestion);
-        console.log("choices:", quizQuestions[i].choices)
-        console.log("choices 2.0:", quizQuestions[i].choices[0])
-
-        // make a button for each answer choice
-        quizQuestions[i].choices.forEach(function(option){
-            for (var value in option) {
-                // console.log(`${option[value]}`);
-
-                var displayChoices = document.createElement('div');
-                var choiceBtn = document.createElement('button');
-                choiceBtn.textContent = `${option[value]}`;
-
-                questionSection.appendChild(displayChoices);
-                questionSection.appendChild(choiceBtn);
-            }
-        })
-    }
+  if (currentQuestion >= allQuestions) {
+    alert("congrats you finished!");
+    // refresh
+    // window.location.reload();
+    clearInterval(timer);
+  } else {
+    // True button
+    askQuestion.textContent = quizQuestions[currentQuestion].ask;
+    trueBtn.textContent = quizQuestions[currentQuestion].choices[0].option;
+    // // False button
+    askQuestion.textContent = quizQuestions[currentQuestion].ask;
+    falseBtn.textContent = quizQuestions[currentQuestion].choices[1].option;
+  }
 }
-
-
-
 
 function startTimer() {
-    timer = setInterval(function () {
-        timerCount--;
-        timeRemaining.textContent = "TIME REMAINING: " + timerCount;
-        if (timerCount === 0) {
-            clearInterval(timer);
-            console.log("you lose");
-        }
-    }, 1000);
+  timer = setInterval(function () {
+    timerCount--;
+    timeRemaining.textContent = "TIME REMAINING: " + timerCount;
+    if (timerCount === 0) {
+      clearInterval(timer);
+      beginQuizBtn.disabled = false;
+      quizSection.style.visibility = "hidden";
+      alert("OH NO! Sorry you did not finish in time. Please try again.")
+      // refresh
+      // window.location.reload();
+    }
+  }, 1000);
 }
 
-
-
-// VIEW SCORES
-// viewScoresBtn.addEventListener("click", viewScores);
-// function viewScores() {
-//     console.log("view scores button working")
-// }

@@ -49,9 +49,10 @@ header {
 main {
     margin: 0;
     padding: 2%;
+    min-height: 90vh;
 }
 
-.startPage, .question-section {
+.startPage, .quiz-section {
     margin: auto;
     text-align: center;
     max-width: 700px;
@@ -75,8 +76,24 @@ main {
     font-weight: bold;
 }
 
-.question-section {
+.quiz-section {
     text-align: left;
+}
+
+.displayChoices label {
+    display: block;
+    padding: 2%;
+    margin: 2% 0;
+    width: 100%;
+    border: 1px solid var(--primaryColor);
+    background-color: var(--secondaryColor);
+    border-radius: 5px;
+}
+
+.displayChoices label:hover{
+    cursor: pointer;
+    color: var(--secondaryColor);
+    background-color: rgb(61, 132, 255);
 }
 
 footer {
@@ -84,7 +101,30 @@ footer {
     background-color: var(--primaryColor);
     color: var(--secondaryColor);
     text-align: center;
-    position: absolute;
+    /* position: absolute;
     bottom: 0;
+    width: 100%; */
+}
+
+.answer-section, .controls-section {
+    text-align: center;
+    margin: 2% 0;
+}
+
+.answer-section button, .controls-section button {
+    padding: 2%;
+    margin: 2%;
     width: 100%;
+}
+
+.controls-section button {
+    padding: 2%;
+    margin: 2%;
+    width: 25%;
+}
+
+.answer-section button:hover, .controls-section button:hover{
+    cursor: pointer;
+    color: var(--secondaryColor);
+    background-color: rgb(61, 132, 255);
 }
