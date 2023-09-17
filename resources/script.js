@@ -63,7 +63,7 @@ var askQuestion = document.createElement("h2");
 
 // Shuffle quiz questions
 function beginQuiz() {
-  timerCount = 10;
+  timerCount = 20;
   beginQuizBtn.disabled = true;
   quizSection.style.visibility = "visible";
   startTimer();
@@ -86,7 +86,7 @@ function displayQuestion() {
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
       }
     } else {
-      console.log("whoops wrong!");
+      timerCount -= 3;
       yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
     }
     if (currentQuestion < allQuestions) {
@@ -103,7 +103,7 @@ function displayQuestion() {
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
       }
     } else {
-      console.log("whoops wrong!");
+      timerCount -= 3;
       yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
     }
     if (currentQuestion < allQuestions) {
