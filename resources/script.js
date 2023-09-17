@@ -29,7 +29,7 @@ var timerCount;
 // Quiz Array
 var quizQuestions = [
   {
-    ask: "The JavaScript link should go in the <footer>?",
+    ask: "The JavaScript link should go in the <footer>",
     choices: [
       { option: "True", answer: false },
       { option: "False", answer: true },
@@ -48,6 +48,20 @@ var quizQuestions = [
       { option: "True", answer: false },
       { option: "False", answer: true },
     ]
+  },
+  {
+    ask: 'Local Scope: variables can be accessed everywhere in a JavaScript code.',
+    choices: [
+      { option: "True", answer: false },
+      { option: "False", answer: true },
+    ]
+  },
+  {
+    ask: 'pop(): removes the last element from an array and returns that element.',
+    choices: [
+      { option: "True", answer: true },
+      { option: "False", answer: false },
+    ]
   }
 ];
 
@@ -55,7 +69,6 @@ var currentQuestion = 0;
 var score = 0;
 yourScore.textContent = "YOUR SCORE: " + score + "/" + quizQuestions.length;
 var allQuestions = quizQuestions.length;
-console.log("allQuestions", allQuestions);
 
 // Display Question
 var askQuestion = document.createElement("h2");
@@ -63,15 +76,15 @@ var askQuestion = document.createElement("h2");
 
 // Shuffle quiz questions
 function beginQuiz() {
-  timerCount = 20;
+  timerCount = 30;
   beginQuizBtn.disabled = true;
   quizSection.style.visibility = "visible";
   startTimer();
   displayQuestion();
 }
 
+// Display questions on screen
 function displayQuestion() {
-
   yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
   askQuestion.textContent = quizQuestions[currentQuestion].ask;
   trueBtn.textContent = quizQuestions[currentQuestion].choices[0].option;
