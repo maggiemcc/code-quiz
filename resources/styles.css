@@ -3,7 +3,6 @@
     --secondaryColor: rgb(255, 255, 255);
 }
 
-
 *,
 *::before,
 *::after {
@@ -32,6 +31,7 @@ header {
 .your-score, .time-remaining {
     margin: auto 0;
 }
+
 
 main {
     margin: 0;
@@ -75,20 +75,26 @@ button:hover {
     background-color: rgb(61, 132, 255);
 }
 
-.user-scores {
-    border: 5px solid var(--primaryColor);
-    min-height: 200px;
-}
-
 .answer-section button:hover {
     cursor: pointer;
     color: var(--secondaryColor);
     background-color: rgb(61, 132, 255);
 }
 
+.play-again {
+    padding: 2%;
+}
+
+.user-scores {
+    border: 5px solid var(--primaryColor);
+    min-height: 200px;
+}
+
 .user-info p {
     display: inline-block;
     width: 50%;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 footer {
