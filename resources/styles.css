@@ -92,3 +92,8 @@ footer {
     color: var(--secondaryColor);
     background-color: rgb(61, 132, 255);
 }
+
+.user-info p {
+    display: inline-block;
+    width: 50%;
+}

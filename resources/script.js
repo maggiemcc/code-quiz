@@ -5,22 +5,13 @@ var yourScore = document.querySelector(".your-score");
 var quizSection = document.querySelector(".quiz-section");
 var userScoresSection = document.querySelector(".user-scores");
 
-// var user = document.createElement("div");
-// var userInitals = document.createElement("p");
-// var userPoints = document.createElement("p");
-// userScore.className = "user";
-// userInitals.className = "user-initials";
-// userPoints.className = "user-points";
 
 var answerSection = document.createElement("div");
-answerSection.className = "answer-section";
-var controlsSection = document.createElement("div");
-controlsSection.className = "controls-section";
-
 var trueBtn = document.createElement("button");
-trueBtn.className = "answer-true";
-
 var falseBtn = document.createElement("button");
+
+answerSection.className = "answer-section";
+trueBtn.className = "answer-true";
 falseBtn.className = "answer-false";
 
 quizSection.style.visibility = "hidden";
@@ -74,6 +65,7 @@ var quizQuestions = [
 ];
 
 var currentQuestion = 0;
+var playerName = "";
 var score = 0;
 yourScore.textContent = "YOUR SCORE: ";
 var allQuestions = quizQuestions.length;
@@ -84,11 +76,13 @@ var askQuestion = document.createElement("h2");
 
 // Shuffle quiz questions
 function beginQuiz() {
+  init();
   timerCount = 20;
   beginQuizBtn.disabled = true;
   quizSection.style.visibility = "visible";
   startTimer();
   displayQuestion();
+
 }
 
 // Display questions on screen
@@ -100,18 +94,18 @@ function displayQuestion() {
   falseBtn.textContent = quizQuestions[currentQuestion].choices[1].option;
 
   // if True button is clicked event
-  trueBtn.onclick = function() {
-    console.log(">>", quizQuestions[currentQuestion].choices[0].answer)
-    if (quizQuestions[currentQuestion].choices[0].answer === true){
+  trueBtn.onclick = function (event) {
+    event.preventDefault();
+    if (quizQuestions[currentQuestion].choices[0].answer === true) {
       if (score < allQuestions) {
         score++;
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
       }
     } else {
-      if (timerCount > 0){
+      if (timerCount > 0) {
         timerCount -= 5;
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
-      } else if(timerCount <= 0){
+      } else if (timerCount < 0) {
         clearInterval(timer);
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
       }
@@ -122,18 +116,19 @@ function displayQuestion() {
   };
 
   // if false button is clicked event
-  falseBtn.onclick = function() {
-    console.log(">>", quizQuestions[currentQuestion].choices[1].answer)
-    if (quizQuestions[currentQuestion].choices[1].answer === true){
+  falseBtn.onclick = function (event) {
+    event.preventDefault();
+
+    if (quizQuestions[currentQuestion].choices[1].answer === true) {
       if (score < allQuestions) {
         score++;
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
       }
     } else {
-      if (timerCount > 0){
+      if (timerCount > 0) {
         timerCount -= 5;
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
-      } else if(timerCount <= 0){
+      } else if (timerCount < 0) {
         clearInterval(timer);
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
       }
@@ -148,27 +143,28 @@ function displayQuestion() {
   quizSection.appendChild(answerSection);
   answerSection.appendChild(trueBtn);
   answerSection.appendChild(falseBtn);
-  quizSection.appendChild(controlsSection);
 };
 
+// GO TO NEXT QUESTION
 function nextQuestion() {
   currentQuestion++;
 
   if (currentQuestion >= allQuestions) {
-    alert("congrats you finished!");
-    // refresh
-    window.location.reload();
+    window.alert("congrats you finished!");
+    playerName = window.prompt("Congrats, you finished! \n Please write your name:");
+    // quizSection.style.visibility = "hidden";
     clearInterval(timer);
+    storeScores();
   } else {
-    // True button
+    // True & false button
+    askQuestion.textContent = (currentQuestion + 1) + ". " + quizQuestions[currentQuestion].ask;
     askQuestion.textContent = (currentQuestion + 1) + ". " + quizQuestions[currentQuestion].ask;
     trueBtn.textContent = quizQuestions[currentQuestion].choices[0].option;
-    // // False button
-    askQuestion.textContent = (currentQuestion + 1) + ". " + quizQuestions[currentQuestion].ask;
     falseBtn.textContent = quizQuestions[currentQuestion].choices[1].option;
   }
-}
+};
 
+// TIMER
 function startTimer() {
   timer = setInterval(function () {
     timerCount--;
@@ -177,10 +173,52 @@ function startTimer() {
       clearInterval(timer);
       beginQuizBtn.disabled = false;
       quizSection.style.visibility = "hidden";
-      alert("Nice try, please try again!")
-      // refresh
-      window.location.reload();
+      window.alert("Nice try, please try again!")
     }
   }, 1000);
+};
+
+
+var quizPlayers = [];
+// console.log(">> player score:", score);
+// console.log(">> player name:", playerName);
+
+function init() {
+  var storedTodos = JSON.parse(localStorage.getItem("quizPlayers"));
+  if (storedTodos !== null) {
+    todos = storedTodos;
+  }
+  displayScores();
 }
 
+// STORE & GET SCORES
+function storeScores() {
+  console.log("happen store");
+  var player = {
+    name: playerName,
+    earned: score,
+  }
+  quizPlayers.push(player);
+  console.log("quizPlayers", quizPlayers);
+
+  displayScores();
+}
+
+function displayScores() {
+  for (var i = 0; quizPlayers.length; i++){
+    var users = document.createElement("div");
+    users.className = "user-info";
+    var showName = document.createElement("p");
+    var showScore = document.createElement("p");
+  
+    showName.innerHTML = playerName;
+    showScore.innerHTML = score + "/" + "5";
+
+    userScoresSection.appendChild(users);
+    users.appendChild(showName);
+    users.appendChild(showScore);
+  }
+
+}
+
+// init();
