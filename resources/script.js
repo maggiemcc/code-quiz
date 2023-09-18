@@ -3,6 +3,7 @@ var beginQuizBtn = document.querySelector(".beginQuiz");
 var viewScoresBtn = document.querySelector(".high-scores");
 var yourScore = document.querySelector(".your-score");
 var quizSection = document.querySelector(".quiz-section");
+var playAgainSection = document.querySelector(".play-again");
 var userScoresSection = document.querySelector(".user-scores");
 
 
@@ -61,6 +62,13 @@ var quizQuestions = [
       { option: "True", answer: true },
       { option: "False", answer: false },
     ]
+  },
+  {
+    ask: 'push(): adds the specified elements to the end of an array and returns the new length of the array.',
+    choices: [
+      { option: "True", answer: true },
+      { option: "False", answer: false },
+    ]
   }
 ];
 
@@ -76,13 +84,11 @@ var askQuestion = document.createElement("h2");
 
 // Shuffle quiz questions
 function beginQuiz() {
-  init();
-  timerCount = 20;
+  timerCount = 40;
   beginQuizBtn.disabled = true;
   quizSection.style.visibility = "visible";
   startTimer();
   displayQuestion();
-
 }
 
 // Display questions on screen
@@ -103,7 +109,7 @@ function displayQuestion() {
       }
     } else {
       if (timerCount > 0) {
-        timerCount -= 5;
+        timerCount -= 10;
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
       } else if (timerCount < 0) {
         clearInterval(timer);
@@ -126,7 +132,7 @@ function displayQuestion() {
       }
     } else {
       if (timerCount > 0) {
-        timerCount -= 5;
+        timerCount -= 10;
         yourScore.innerHTML = "YOUR SCORE: " + score + "/" + allQuestions;
       } else if (timerCount < 0) {
         clearInterval(timer);
@@ -150,11 +156,26 @@ function nextQuestion() {
   currentQuestion++;
 
   if (currentQuestion >= allQuestions) {
-    window.alert("congrats you finished!");
     playerName = window.prompt("Congrats, you finished! \n Please write your name:");
-    // quizSection.style.visibility = "hidden";
+    quizSection.style.visibility = "hidden";
+    beginQuizBtn.disabled = true;
     clearInterval(timer);
     storeScores();
+    
+    // Start new game
+    var newGameTimer;
+    var gameCount;
+    gameCount = 10;
+    playAgainSection.textContent = "Play again in 10 secs...";
+
+    playAgainSection = setInterval(function () {
+      gameCount--;   
+      if (gameCount <= 0) {
+        clearInterval(newGameTimer);
+        window.location.reload();
+      }
+    }, 1000);
+
   } else {
     // True & false button
     askQuestion.textContent = (currentQuestion + 1) + ". " + quizQuestions[currentQuestion].ask;
@@ -164,7 +185,7 @@ function nextQuestion() {
   }
 };
 
-// TIMER
+// TIMER / PLAYER RUNS OUT OF TIME
 function startTimer() {
   timer = setInterval(function () {
     timerCount--;
@@ -174,51 +195,45 @@ function startTimer() {
       beginQuizBtn.disabled = false;
       quizSection.style.visibility = "hidden";
       window.alert("Nice try, please try again!")
+      window.location.reload();
     }
   }, 1000);
 };
 
 
 var quizPlayers = [];
-// console.log(">> player score:", score);
-// console.log(">> player name:", playerName);
-
-function init() {
-  var storedTodos = JSON.parse(localStorage.getItem("quizPlayers"));
-  if (storedTodos !== null) {
-    todos = storedTodos;
-  }
-  displayScores();
-}
 
 // STORE & GET SCORES
 function storeScores() {
-  console.log("happen store");
+    var storedPlayers = JSON.parse(localStorage.getItem("quizPlayers"));
+  if (storedPlayers !== null) {
+    quizPlayers = storedPlayers;
+  } 
+
   var player = {
-    name: playerName,
+    theirName: playerName,
     earned: score,
   }
   quizPlayers.push(player);
-  console.log("quizPlayers", quizPlayers);
-
+  console.log(quizPlayers)
   displayScores();
+  localStorage.setItem("quizPlayers", JSON.stringify(quizPlayers));
+
 }
 
+// GRAB EACH ITEM FROM quizPlayers
 function displayScores() {
-  for (var i = 0; quizPlayers.length; i++){
-    var users = document.createElement("div");
-    users.className = "user-info";
-    var showName = document.createElement("p");
-    var showScore = document.createElement("p");
-  
-    showName.innerHTML = playerName;
-    showScore.innerHTML = score + "/" + "5";
-
-    userScoresSection.appendChild(users);
-    users.appendChild(showName);
-    users.appendChild(showScore);
-  }
-
+      quizPlayers.forEach(function(item) {
+        var users = document.createElement("div");
+        users.className = "user-info";
+        var showName = document.createElement("p");
+        var showScore = document.createElement("p");
+      
+        showName.innerHTML = item.theirName;
+        showScore.innerHTML = item.earned + "/" + quizQuestions.length;
+    
+        userScoresSection.appendChild(users);
+        users.appendChild(showName);
+        users.appendChild(showScore);
+      });
 }
-
-// init();
