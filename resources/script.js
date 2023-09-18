@@ -214,7 +214,8 @@ function storeScores() {
     theirName: playerName,
     earned: score,
   }
-  quizPlayers.push(player);
+  // quizPlayers.push(player);
+  quizPlayers.unshift(player);
   console.log(quizPlayers)
   displayScores();
   localStorage.setItem("quizPlayers", JSON.stringify(quizPlayers));
