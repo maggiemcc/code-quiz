@@ -16,6 +16,7 @@ trueBtn.className = "answer-true";
 falseBtn.className = "answer-false";
 
 quizSection.style.visibility = "hidden";
+userScoresSection.style.visibility = "hidden";
 
 // Add event listeners
 beginQuizBtn.addEventListener("click", beginQuiz);
@@ -158,6 +159,7 @@ function nextQuestion() {
   if (currentQuestion >= allQuestions) {
     playerName = window.prompt("Congrats, you finished! \n Please write your name:");
     quizSection.style.visibility = "hidden";
+    userScoresSection.style.visibility = "visible";
     beginQuizBtn.disabled = true;
     clearInterval(timer);
     storeScores();
@@ -165,17 +167,19 @@ function nextQuestion() {
     // Start new game
     var newGameTimer;
     var gameCount;
-    gameCount = 10;
-    playAgainSection.textContent = "Play again in 10 secs...";
+    gameCount = 15;
 
-    playAgainSection = setInterval(function () {
-      gameCount--;   
-      if (gameCount <= 0) {
-        clearInterval(newGameTimer);
-        window.location.reload();
-      }
-    }, 1000);
-
+    function newGame() {
+      newGameTimer = setInterval(function () {
+        gameCount--;
+        playAgainSection.textContent = "You can play a new game in " + gameCount + " seconds...";
+        if (gameCount <= 0) {
+          clearInterval(newGameTimer);
+          window.location.reload();
+        }
+      }, 1000);
+    }
+    newGame();
   } else {
     // True & false button
     askQuestion.textContent = (currentQuestion + 1) + ". " + quizQuestions[currentQuestion].ask;
@@ -219,7 +223,6 @@ function storeScores() {
   console.log(quizPlayers)
   displayScores();
   localStorage.setItem("quizPlayers", JSON.stringify(quizPlayers));
-
 }
 
 // GRAB EACH ITEM FROM quizPlayers
@@ -232,6 +235,11 @@ function displayScores() {
       
         showName.innerHTML = item.theirName;
         showScore.innerHTML = item.earned + "/" + quizQuestions.length;
+        
+        if (item.earned === 6){
+          showName.style.color = "green";
+          showScore.style.color = "green";
+        }
     
         userScoresSection.appendChild(users);
         users.appendChild(showName);
