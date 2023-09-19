@@ -37,7 +37,7 @@ var quizQuestions = [
     ]
   },
   {
-    ask: "The correct way to start a FOR loop is: for (var i = 0; i <= 5; i++)",
+    ask: "The correct way to start a FOR loop is: for (var i = 0; i < 5; i++)",
     choices: [
       { option: "True", answer: true },
       { option: "False", answer: false },
@@ -70,7 +70,21 @@ var quizQuestions = [
       { option: "True", answer: true },
       { option: "False", answer: false },
     ]
-  }
+  },
+  {
+    ask: 'The correct way to write "Hello World" in an alert box is: alertBox("Hello World")',
+    choices: [
+      { option: "True", answer: false },
+      { option: "False", answer: true },
+    ]
+  },
+  {
+    ask: 'In JavaScript, && is a logical operator.',
+    choices: [
+      { option: "True", answer: true },
+      { option: "False", answer: false },
+    ]
+  },
 ];
 
 var currentQuestion = 0;
@@ -85,7 +99,7 @@ var askQuestion = document.createElement("h2");
 
 // Shuffle quiz questions
 function beginQuiz() {
-  timerCount = 40;
+  timerCount = 60;
   beginQuizBtn.disabled = true;
   quizSection.style.visibility = "visible";
   startTimer();
@@ -157,7 +171,7 @@ function nextQuestion() {
   currentQuestion++;
 
   if (currentQuestion >= allQuestions) {
-    playerName = window.prompt("Congrats, you finished! \n Please write your name:");
+    playerName = window.prompt("Congrats, you finished! \n You earned: " + score + "/" + allQuestions + "\n Please write your name:");
     quizSection.style.visibility = "hidden";
     userScoresSection.style.visibility = "visible";
     beginQuizBtn.disabled = true;
@@ -236,11 +250,11 @@ function displayScores() {
         showName.innerHTML = item.theirName;
         showScore.innerHTML = item.earned + "/" + quizQuestions.length;
         
-        if (item.earned === 6){
+        if (item.earned >= 5){
           showName.style.color = "green";
           showScore.style.color = "green";
         }
-    
+        
         userScoresSection.appendChild(users);
         users.appendChild(showName);
         users.appendChild(showScore);
