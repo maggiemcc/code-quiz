@@ -250,7 +250,7 @@ function displayScores() {
         showName.innerHTML = item.theirName;
         showScore.innerHTML = item.earned + "/" + quizQuestions.length;
         
-        if (item.earned >= 5){
+        if (item.earned >= 6){
           showName.style.color = "green";
           showScore.style.color = "green";
         }
