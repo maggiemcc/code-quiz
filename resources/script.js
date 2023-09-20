@@ -236,8 +236,16 @@ function storeScores() {
     theirName: playerName,
     earned: score,
   }
+  console.log(player)
+
+  if(player.earned < 5){
+    window.alert(player.theirName + ", try again to earn a higher score!");
+  } else if (player.earned >= 5){
+    window.alert(player.theirName + ", your score has been added to the higher score list!");
+    quizPlayers.unshift(player);
+  }
   
-  quizPlayers.unshift(player);
+  // quizPlayers.unshift(player);
   // MDN: Sort and display from highest to lowest score value
   quizPlayers.sort((firstItem, secondItem) => secondItem.earned - firstItem.earned);
 
@@ -260,13 +268,18 @@ function displayScores() {
         if (item.earned == allQuestions){
           showName.style.color = "green";
           showScore.style.color = "green";
-        } else if (item.earned >= 5 && item.earned < allQuestions){
-          showName.style.color = "blue";
-          showScore.style.color = "blue";
-        } else if (item.earned < 5){
-          showName.style.color = "red";
-          showScore.style.color = "red";
+        } else {
+          showName.style.color = "black";
+          showScore.style.color = "black";
         }
+        // else if (item.earned <= 6){
+        //   showName.style.color = "blue";
+        //   showScore.style.color = "blue";
+        // } 
+        // else if (item.earned < 5){
+        //   showName.style.color = "red";
+        //   showScore.style.color = "red";
+        // }
 
         userScoresSection.appendChild(users);
         users.appendChild(showName);
