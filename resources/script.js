@@ -239,9 +239,9 @@ function storeScores() {
   console.log(player)
 
   if(player.earned < 5){
-    window.alert(player.theirName + ", try again to earn a higher score!");
+    window.alert(player.theirName + ", try again to earn a better score to be put on the high scores list!");
   } else if (player.earned >= 5){
-    window.alert(player.theirName + ", your score has been added to the higher score list!");
+    window.alert(player.theirName + ", your score has been added to the high scores list!");
     quizPlayers.unshift(player);
   }
   
