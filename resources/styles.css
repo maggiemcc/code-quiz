@@ -89,12 +89,12 @@ button:hover {
     border: 5px solid var(--primaryColor);
     min-height: 200px;
     justify-content: center;
-    padding: 2%;
+    /* padding: 2%; */
     background-color: var(--secondaryColor);
 }
 
 .user-info {
-    padding: 1% 1%;
+    padding: 1% 5%;
 }
 
 .user-info p {

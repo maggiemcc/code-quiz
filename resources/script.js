@@ -1,4 +1,5 @@
 // variables
+var startPage = document.querySelector(".startPage");
 var beginQuizBtn = document.querySelector(".beginQuiz");
 var viewScoresBtn = document.querySelector(".high-scores");
 var yourScore = document.querySelector(".your-score");
@@ -101,6 +102,8 @@ var askQuestion = document.createElement("h2");
 function beginQuiz() {
   timerCount = 60;
   beginQuizBtn.disabled = true;
+  startPage.style.visibility = "hidden";
+  startPage.style.height = "0px";
   quizSection.style.visibility = "visible";
   startTimer();
   displayQuestion();
@@ -173,6 +176,7 @@ function nextQuestion() {
   if (currentQuestion >= allQuestions) {
     playerName = window.prompt("Congrats, you finished! \n You earned: " + score + "/" + allQuestions + "\n Please write your name:");
     quizSection.style.visibility = "hidden";
+    quizSection.style.height = "0px";
     userScoresSection.style.visibility = "visible";
     beginQuizBtn.disabled = true;
     clearInterval(timer);
