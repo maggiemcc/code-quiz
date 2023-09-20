@@ -88,6 +88,13 @@ button:hover {
 .user-scores {
     border: 5px solid var(--primaryColor);
     min-height: 200px;
+    justify-content: center;
+    padding: 2%;
+    background-color: var(--secondaryColor);
+}
+
+.user-info {
+    padding: 1% 1%;
 }
 
 .user-info p {
@@ -95,6 +102,12 @@ button:hover {
     width: 50%;
     font-size: 25px;
     font-weight: bold;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.user-info:nth-child(even){
+    background-color: rgb(233, 233, 233);
 }
 
 footer {
@@ -103,4 +116,3 @@ footer {
     color: var(--secondaryColor);
     text-align: center;
 }
-

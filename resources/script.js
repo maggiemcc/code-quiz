@@ -232,9 +232,11 @@ function storeScores() {
     theirName: playerName,
     earned: score,
   }
-  // quizPlayers.push(player);
+  
   quizPlayers.unshift(player);
-  console.log(quizPlayers)
+  // MDN: Sort and display from highest to lowest score value
+  quizPlayers.sort((firstItem, secondItem) => secondItem.earned - firstItem.earned);
+
   displayScores();
   localStorage.setItem("quizPlayers", JSON.stringify(quizPlayers));
 }
@@ -249,12 +251,19 @@ function displayScores() {
       
         showName.innerHTML = item.theirName;
         showScore.innerHTML = item.earned + "/" + quizQuestions.length;
+        showScore.style.textAlign = "right"
         
-        if (item.earned >= 6){
+        if (item.earned == allQuestions){
           showName.style.color = "green";
           showScore.style.color = "green";
+        } else if (item.earned >= 5 && item.earned < allQuestions){
+          showName.style.color = "blue";
+          showScore.style.color = "blue";
+        } else if (item.earned < 5){
+          showName.style.color = "red";
+          showScore.style.color = "red";
         }
-        
+
         userScoresSection.appendChild(users);
         users.appendChild(showName);
         users.appendChild(showScore);
